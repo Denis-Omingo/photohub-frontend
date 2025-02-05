@@ -21,3 +21,13 @@
   }
   
 
+  @layer components {
+    .heading-l2 {
+      @apply text-2xl md:text-4xl font-bold text-secondary;
+    }
+    .heading-l3 {
+      @apply text-[1rem] md:text-[1.2rem] font-bold text-secondary; 
+    }
+  }
+  
+  

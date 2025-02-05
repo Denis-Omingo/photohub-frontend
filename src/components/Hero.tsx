@@ -73,7 +73,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
     </div>
-    <div className="bg-background text-secondary min-h-[20vh] flex items-center justify-center p-2">
+    <div className="bg-background text-secondary min-h-[40vh] flex items-center justify-center p-2">
         <div className="">
             <h2 className="heading-l2">Here is how it works</h2>
             <ol>

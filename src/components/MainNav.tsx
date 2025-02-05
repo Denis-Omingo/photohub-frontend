@@ -1,7 +1,8 @@
 import { LogIn } from "lucide-react";
+import loginWithGoogle from "./auth/OAuth";
 const MainNav =()=>{
     return(
-       <LogIn className="text-primary-foreground"/>
+       <LogIn onClick={loginWithGoogle} className="text-primary-foreground"/>
     )
 }
 

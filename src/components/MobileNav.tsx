@@ -2,6 +2,7 @@ import { Menu} from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import loginWithGoogle from "./auth/OAuth";
 
 const MobileNav=()=>{
     return(
@@ -15,7 +16,7 @@ const MobileNav=()=>{
                 </SheetTitle>
                 <Separator/>
                 <SheetDescription className="flex">
-                    <Button className="flex-1 font-bold bg-primary">Log In</Button>
+                    <Button onClick={loginWithGoogle} className="flex-1 font-bold bg-primary">Log In</Button>
                 </SheetDescription>
             </SheetContent>
        </Sheet>

@@ -4,6 +4,7 @@ import photohub2 from "../assets/photohub2.jpg";
 import photohub3 from "../assets/photohub3.jpg";
 import photohub4 from "../assets/photohub4.jpg";
 import { Button } from "./ui/button";
+import loginWithGoogle from "./auth/OAuth"
 
 const images: string[] = [
   photohub1,
@@ -68,7 +69,9 @@ const Hero: React.FC = () => {
             ))}
           </div>
           <div className="">
-            <Button variant="ghost" className="bg-secondary text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary">Get Started</Button>
+            <Button variant="ghost" className="bg-secondary text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary" onClick={loginWithGoogle}>
+              Get Started
+            </Button>
           </div>
         </div>
       </div>

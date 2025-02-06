@@ -4,7 +4,7 @@ import photohub2 from "../assets/photohub2.jpg";
 import photohub3 from "../assets/photohub3.jpg";
 import photohub4 from "../assets/photohub4.jpg";
 import { Button } from "./ui/button";
-import loginWithGoogle from "./auth/OAuth"
+import useGoogleLogin from './auth/OAuth';
 
 const images: string[] = [
   photohub1,
@@ -14,6 +14,7 @@ const images: string[] = [
 ];
 
 const Hero: React.FC = () => {
+  const loginWithGoogle=useGoogleLogin();
   const [currentImages, setCurrentImages] = useState<string[]>(images);
 
   useEffect(() => {

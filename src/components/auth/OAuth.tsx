@@ -1,19 +1,30 @@
-import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
-import {app} from "../../firebase"
+import { getAuth, GoogleAuthProvider, signInWithPopup, UserCredential } from 'firebase/auth';
+import { app } from "../../firebase";
+import { useDispatch } from 'react-redux';
+import { signInSuccess } from '@/redux/user/userSlice';
 
-const loginWithGoogle = async () => {
-    try {
-        const provider=new GoogleAuthProvider();
-        const auth=getAuth(app);
+const useGoogleLogin = () => {
+    const dispatch = useDispatch();
+    const loginWithGoogle = async (): Promise<void> => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const auth = getAuth(app);
+            const result: UserCredential = await signInWithPopup(auth, provider);
+            
+            // Dispatch user data to Redux store
+            dispatch(signInSuccess(result.user));
 
-        const result=await signInWithPopup(auth, provider);
+            console.log("User signed in:", result.user);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error("Could not sign in with Google:", error.message);
+            } else {
+                console.error("An unknown error occurred during Google sign-in.");
+            }
+        }
+    };
 
-        console.log(result);
-    } catch (error) {
-        console.log("Could not sign in with Google", error);
-    }
+    return loginWithGoogle; 
 };
 
-export default loginWithGoogle;
-
-
+export default useGoogleLogin;

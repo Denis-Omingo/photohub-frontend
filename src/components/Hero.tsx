@@ -19,8 +19,8 @@ const images: string[] = [
 const Hero = () => {
   const [currentImages, setCurrentImages] = useState<string[]>(images);
   const { currentUser } = useSelector((state: RootState) => state.user);
+  console.log(currentUser)
   const navigate=useNavigate();
-   console.log(currentUser)
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImages((prev) => {
@@ -60,7 +60,7 @@ const Hero = () => {
         <div className="col-span-1 md:col-span-2 flex flex-col justify-center space-y-6 text-center md:text-left">
         {currentUser ? (
               <>
-                <h1 className="heading-l2 capitalize">Hello, {currentUser.displayName}</h1>
+                <h1 className="heading-l2 capitalize">Hello, {currentUser.email}</h1>
                 <p className="text-sm md:text-lg">
                   You are logged in and ready to manage your albums. Enjoy browsing through your collection and other people's albums.
                 </p>
@@ -97,7 +97,7 @@ const Hero = () => {
                   </Button>
                 ) : (
                   <AuthButton>
-                    Get Started
+                    <span className="bg-secondary text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary py-2 px-3 ">Get Started</span>
                   </AuthButton>
                 )
                }

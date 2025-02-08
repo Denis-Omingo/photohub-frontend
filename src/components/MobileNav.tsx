@@ -3,25 +3,13 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from 
 import { Separator } from "./ui/separator";
 import AuthButton from "./GoogleAuthButton";
 import { RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button } from "./ui/button";
-import { getAuth, signOut } from "firebase/auth";
-import { signOut as signOutAction } from "@/redux/user/userSlice";
-import { app } from "@/firebase";
+import { useLogout } from "@/api/LogOutApi";
 
 const MobileNav=()=>{
     const { currentUser } = useSelector((state: RootState) => state.user);
-    const dispatch=useDispatch();
-
-    const logout=async()=>{
-        const auth = getAuth(app);
-            try {
-                await signOut(auth);
-                dispatch(signOutAction()); 
-            } catch (error) {
-                console.error("Error during logout:", error);
-        }
-        }
+    const logout=useLogout();
     return(
        <Sheet>
             <SheetTrigger>
@@ -39,7 +27,7 @@ const MobileNav=()=>{
                             <Button 
                             variant="ghost" 
                             className="flex-1 font-bold bg-secondary text-secondary-foreground" 
-                            onClick={() => logout()}
+                            onClick={logout}
                             >
                             Log Out
                             </Button>

@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import Hero from "@/components/Hero";
+import { User } from "@/types";
 
-interface User {
-    id: number;
-    username: string;
-    fullName?: string;
-    albumCount: number;
-}
 
 const HomePage: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -25,7 +21,9 @@ const HomePage: React.FC = () => {
     }, []);
 
     return (
-        <div className="flex flex-col gap-12 p-6">
+       <div>
+        <Hero/>
+         <div className="flex flex-col gap-12 p-6">
             <div className="bg-background shadow-md py-8 flex flex-col gap-5 text-center -mt-16">
                 <h1 className="text-3xl font-bold text-primary-foreground">Welcome to the Platform</h1>
                 <p className="text-lg text-secondary-foreground">Explore users and their albums</p>
@@ -45,11 +43,11 @@ const HomePage: React.FC = () => {
                         </thead>
                         <tbody>
                             {users.map((user) => (
-                                <tr key={user.id} className="border-b">
-                                    <td className="p-3 text-secondary-foreground">{user.fullName || user.username}</td>
-                                    <td className="p-3 text-secondary-foreground">{user.albumCount}</td>
+                                <tr key={user.email} className="border-b">
+                                    <td className="p-3 text-secondary-foreground">{user.name || user.userName}</td>
+                                    <td className="p-3 text-secondary-foreground">{user.email}</td>
                                     <td className="p-3">
-                                        <button onClick={() => navigate(`/user/${user.id}`)} className="text-blue-500 hover:underline">
+                                        <button onClick={() => navigate(`/user/${user.email}`)} className="text-blue-500 hover:underline">
                                             View Profile
                                         </button>
                                     </td>
@@ -67,6 +65,7 @@ const HomePage: React.FC = () => {
                 </CardContent>
             </Card>
         </div>
+       </div>
     );
 };
 

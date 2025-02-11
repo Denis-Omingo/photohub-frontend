@@ -18,7 +18,7 @@ const MobileNav=()=>{
             <SheetContent className="space-y-3 bg-primary">
                 <SheetTitle>
                    {
-                    currentUser?(<span className="capitalize text-primary-foreground">Hi {currentUser.displayName}</span>):( <span>Login to PhotoHub</span>)
+                    currentUser?(<span className="capitalize text-primary-foreground">Hi {currentUser.userName}</span>):( <span>Login to PhotoHub</span>)
                    }
                 </SheetTitle>
                 <Separator/>

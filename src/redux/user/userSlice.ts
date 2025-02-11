@@ -1,5 +1,5 @@
+import { User } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "firebase/auth";
 
 interface UserState {
     currentUser: User | null;
@@ -34,9 +34,21 @@ const userSlice = createSlice({
             state.error = null;
             state.loading = false;
           },
+          updateUserStart: (state) => {
+            state.loading = true;
+        },
+        updateUserSuccess: (state, action: PayloadAction<User>) => {
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        updateUserFailure: (state, action: PayloadAction<string>) => {
+            state.error = action.payload;
+            state.loading = false;
+        },
     },
 });
 
-export const { signInStart, signInSuccess, signInFailure, signOut } = userSlice.actions;
+export const { signInStart, signInSuccess, signInFailure, signOut, updateUserStart, updateUserSuccess, updateUserFailure } = userSlice.actions;
 
 export default userSlice.reducer;

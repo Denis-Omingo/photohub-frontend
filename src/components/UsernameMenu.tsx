@@ -14,11 +14,11 @@ const UsernameMenu=()=> {
        <DropdownMenu>
             <DropdownMenuTrigger className='flex items-center px-3 font-bold hover:text-secondary gap-2'>
                 <CircleUserRound className="text-secondary-foreground capitalize"/>
-                {currentUser?.displayName}
+                {currentUser?.userName}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-secondary text-secondary-foreground">
                <DropdownMenuItem>
-                    <Link to='/user-profile' className="font-bold hover:text-secondary">Profile</Link>
+                    <Link to='/user' className="font-bold hover:text-secondary">Profile</Link>
                </DropdownMenuItem>
                <Separator/>
 

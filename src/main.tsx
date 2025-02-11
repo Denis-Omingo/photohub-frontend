@@ -7,6 +7,7 @@ import {persistor, store} from './redux/store'
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import {QueryClient, QueryClientProvider} from 'react-query'
+import { Toaster } from './components/ui/sonner'
 
 const queryClient=new QueryClient({
   defaultOptions:{
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Router>
           <QueryClientProvider client={queryClient}>
               <AppRoutes/>
+              <Toaster visibleToasts={1} position="top-right"/>
           </QueryClientProvider>
         </Router>
       </PersistGate>

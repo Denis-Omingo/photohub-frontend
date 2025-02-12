@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import Hero from "@/components/Hero";
 import { User } from "@/types";
 
 
@@ -22,9 +21,8 @@ const HomePage: React.FC = () => {
 
     return (
        <div>
-        <Hero/>
          <div className="flex flex-col gap-12 p-6">
-            <div className="bg-background shadow-md py-8 flex flex-col gap-5 text-center -mt-16">
+            <div className="bg-background shadow-md py-8 flex flex-col gap-5 text-center -mt-5">
                 <h1 className="text-3xl font-bold text-primary-foreground">Welcome to the Platform</h1>
                 <p className="text-lg text-secondary-foreground">Explore users and their albums</p>
             </div>

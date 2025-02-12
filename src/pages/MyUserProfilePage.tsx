@@ -6,7 +6,7 @@ import { Pencil, Image, Album } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 
-const UserPage = () => {
+const MyUserProfilePage = () => {
   const navigate = useNavigate();
   const currentUser = useSelector(
     (state: RootState) => state.user.currentUser,
@@ -27,14 +27,14 @@ const UserPage = () => {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <p className="text-secondary">Name: <span className="text-foreground font-medium">{currentUser.name}</span></p>
+              <p className="text-secondary">Name: <span className="text-foreground font-medium capitalize">{currentUser.name}</span></p>
               <p className="text-secondary">Email: <span className="text-foreground font-medium">{currentUser.email}</span></p>
               <p className="text-secondary">Username: <span className="text-foreground font-medium">{currentUser.userName}</span></p>
             </div>
             <div>
-              <p className="text-secondary">City: <span className="text-foreground font-medium">{currentUser.city}</span></p>
-              <p className="text-secondary">Country: <span className="text-foreground font-medium">{currentUser.country}</span></p>
-              <p className="text-secondary">Address: <span className="text-foreground font-medium">{currentUser.addressLine1}</span></p>
+              <p className="text-secondary">City: <span className="text-foreground font-medium capitalize">{currentUser.city}</span></p>
+              <p className="text-secondary">Country: <span className="text-foreground font-medium capitalize">{currentUser.country}</span></p>
+              <p className="text-secondary">Address: <span className="text-foreground font-medium capitalize">{currentUser.addressLine1}</span></p>
             </div>
           </div>
           <div className="mt-4">
@@ -72,4 +72,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default MyUserProfilePage;

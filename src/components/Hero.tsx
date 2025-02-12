@@ -42,7 +42,7 @@ const Hero = React.memo(() => {
   }, []);
 
   // Memoized navigation function
-  const handleViewAlbums = useCallback(() => navigate("/albums"), [navigate]);
+  const handleViewAlbums = useCallback(() => navigate("/home"), [navigate]);
 
   return (
     <section>
@@ -63,7 +63,7 @@ const Hero = React.memo(() => {
           <div className="col-span-1 md:col-span-2 flex flex-col justify-center space-y-6 text-center md:text-left">
             {currentUser ? (
               <>
-                <h1 className="heading-l2">Hello, {currentUser.userName}</h1>
+                <h1 className="heading-l2">Hello, {currentUser.name}</h1>
                 <p className="text-sm md:text-lg">
                   You are logged in and ready to manage your albums. Enjoy browsing through your collection and other people's albums.
                 </p>
@@ -99,12 +99,12 @@ const Hero = React.memo(() => {
                   className="bg-secondary text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary"
                   onClick={handleViewAlbums}
                 >
-                  View Albums
+                  Home
                 </Button>
               ) : (
                 <AuthButton>
                   <span className="bg-secondary text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary py-2 px-3">
-                    Get Started
+                    Get Started Now
                   </span>
                 </AuthButton>
               )}

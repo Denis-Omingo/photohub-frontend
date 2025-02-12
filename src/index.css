@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    --background: 255, 255, 255; /* White background */
+    --background: 255, 25, 25; /* White background */
     --foreground: 0, 31, 63;     /* Navy Blue foreground for text */
   
     --primary: 0, 128, 128;       /* Teal */

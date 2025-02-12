@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
-import { signInFailure, signInSuccess, updateUserFailure, updateUserSuccess } from "@/redux/user/userSlice";
+import { signInFailure, signInSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "@/redux/user/userSlice";
 import { toast } from "sonner";
 import { User } from "@/types";
 
@@ -99,48 +99,60 @@ type UpdateMyUserRequest = {
 };
 
 export const useUpdateMyUser = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const updateMyUserRequest = async (formData: UpdateMyUserRequest) => {
-        const token = localStorage.getItem("auth_token");
-        if (!token) throw new Error("Authentication token is missing");
+  const updateMyUserRequest = async (formData: UpdateMyUserRequest): Promise<User> => {
+    const token = localStorage.getItem("auth_token");
+    if (!token) throw new Error("Authentication token is missing");
 
-        const response = await fetch(`${API_BASE_URL}/api/user`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`, // Include the token in headers
-            },
-            credentials: "include",
-            body: JSON.stringify(formData),
-        });
+    dispatch(updateUserStart()); 
 
-        console.log("Request Payload:", formData);
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Failed to update user");
-        }
-
-        return response.json();
-    };
-
-    const mutation = useMutation(updateMyUserRequest, {
-        onSuccess: (data) => {
-            dispatch(updateUserSuccess(data)); // Update Redux state
-            toast.success("User updated successfully!");
-        },
-        onError: (error: any) => {
-            dispatch(updateUserFailure(error.message)); // Dispatch failure action
-            toast.error(error.message);
-        },
+    const response = await fetch(`${API_BASE_URL}/api/user`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+      body: JSON.stringify(formData),
     });
 
-    return {
-        updateUser: mutation.mutateAsync,
-        isLoading: mutation.isLoading,
-        isError: mutation.isError,
-        error: mutation.error,
-    };
+    console.log("Request Payload:", formData);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to update user");
+    }
+
+    const data = await response.json();
+    console.log("Updated User Response:", data);
+
+    if (!data.user) {
+      throw new Error("Invalid response format: 'user' field missing.");
+    }
+
+    return data.user; 
+  };
+
+  const mutation = useMutation(updateMyUserRequest, {
+    onSuccess: (user) => {
+      dispatch(updateUserSuccess(user)); 
+      toast.success("User updated successfully!");
+    },
+    onError: (error: any) => {
+      console.error("Update failed:", error);
+      dispatch(updateUserFailure(error.message));
+      toast.error(error.message);
+    },
+  });
+
+  return {
+    updateUser: mutation.mutateAsync,
+    isLoading: mutation.isLoading,
+    isError: mutation.isError,
+    error: mutation.error,
+  };
 };
+
+  
 

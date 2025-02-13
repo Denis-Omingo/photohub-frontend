@@ -1,8 +1,18 @@
+import { useParams, useNavigate } from "react-router-dom";
+import { useFetchAlbums } from "@/api/MyAlbumApi";
+import UpdateMyAlbumModal from "@/components/UpdateMyAlbumModal";
 
- const UpdateMyAlbumPage=()=> {
-    return (
-        <h1>Here is the album's page where you can edit album details, upload images to the album and view images in the album from this point</h1>
-    )
-}
+const UpdateMyAlbumPage = () => {
+  const { albumId } = useParams(); // Get albumId from URL
+  const navigate = useNavigate();
+  const { albums, isLoading } = useFetchAlbums(); // Fetch all albums
 
-export default UpdateMyAlbumPage
+  const album = albums?.find((a) => a._id === albumId); // Find the album by ID
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!album) return <p>Album not found</p>;
+
+  return <UpdateMyAlbumModal album={album} onClose={() => navigate(-1)} />;
+};
+
+export default UpdateMyAlbumPage;

@@ -28,7 +28,7 @@ export const useLogout = () => {
             //  Clear localStorage tokens (if stored)
             localStorage.removeItem("token");
 
-            console.log("Logged out successfully!");
+            console.log("Logged out successfully!-");
 
             //  Redirect to login page (optional)
             navigate("/"); //  Redirect after logout

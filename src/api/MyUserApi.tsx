@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "@/redux/user/userSlice";
 import { toast } from "sonner";

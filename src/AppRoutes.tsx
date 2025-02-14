@@ -27,6 +27,7 @@ const AppRoutes = () => {
         <Route path="/my-albums" element={<Layout><GetMyAlbums /></Layout>} />
         <Route path="/user/:userId" element={<Layout><UserPage /></Layout>} />
         <Route path="/user/view-profile" element={<Layout><MyUserProfilePage /></Layout>} />
+        <Route path="/all-users/user/:userId" element={<Layout><MyUserProfilePage /></Layout>} />
         <Route path="/user/update-profile" element={<Layout><UpdateMyUserProfilePage /></Layout>} />
         <Route path="/user/create-album" element={<Layout><CreateAlbum /></Layout>} />
         <Route path="/albums/update-album/:albumId" element={<Layout><UpdateMyAlbumPage /></Layout>} />

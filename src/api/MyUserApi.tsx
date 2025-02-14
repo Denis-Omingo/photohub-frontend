@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "@/redux/user/userSlice";
 import { toast } from "sonner";
@@ -158,66 +158,69 @@ export const useUpdateMyUser = () => {
     error: mutation.error,
   };
 };
+//Fetch All Users
 
- export const useFetchAllUsers = () => {
-   const dispatch = useDispatch();
- 
+export const useFetchAllUsers = () => {
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
-   const { allUsers: users, loading: isLoading, error: isError } = useSelector(
-     (state: any) => state.allUsers
-   );
- 
- 
-   const fetchUsers = async (): Promise<User[]> => {
-     const token = localStorage.getItem("auth_token");
-     if (!token) throw new Error("Authentication token is missing");
- 
-     dispatch(fetchUsersStart());
- 
-     try {
-       const response = await fetch(`${API_BASE_URL}/api/user/all-users`, {
-         method: "GET",
-         headers: {
-           Authorization: `Bearer ${token}`,
-           "Content-Type": "application/json",
-         },
-       });
- 
-       if (!response.ok) {
-         throw new Error("Failed to fetch users");
-       }
- 
-       const data = await response.json();
-       console.log("API Response:", data); // Debugging step
- 
-       const fetchedUsers = Array.isArray(data) ? data : data.users;
- 
-       if (!fetchedUsers) {
-         throw new Error("Invalid response format: 'users' field missing.");
-       }
- 
-       dispatch(fetchUsersSuccess(fetchedUsers)); // Dispatch success action
-       return fetchedUsers;
-     } catch (error: any) {
-       dispatch(fetchUsersFailure(error.message)); // Dispatch failure action
-       throw error;
-     }
-   };
- 
-   // Use React Query to manage fetching
-   useQuery({
-     queryKey: ["fetchUsers"],
-     queryFn: fetchUsers,
-     retry: 1,
-     enabled: users.length === 0, // Fetch only if users are empty
-   });
- 
-   return {
-     users,
-     isLoading,
-     isError,
-   };
- };
+  const { allUsers: users, loading: isLoading, error: isError } = useSelector(
+    (state: any) => state.allUsers
+  );
+
+  const fetchUsers = async (): Promise<User[]> => {
+    const token = localStorage.getItem("auth_token");
+    if (!token) throw new Error("Authentication token is missing");
+
+    dispatch(fetchUsersStart());
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/user/all-users`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
+
+      const data = await response.json();
+      const fetchedUsers = Array.isArray(data) ? data : data.users;
+
+      if (!Array.isArray(fetchedUsers)) {
+        throw new Error("Invalid response format: Expected an array of users.");
+      }
+
+      dispatch(fetchUsersSuccess(fetchedUsers)); // Dispatch success action
+      return fetchedUsers;
+    } catch (error: any) {
+      dispatch(fetchUsersFailure(error.message)); // Dispatch failure action
+      throw error;
+    }
+  };
+
+  const { data: usersData} = useQuery({
+    queryKey: ["fetchUsers"],
+    queryFn: fetchUsers,
+    refetchInterval: 10000, 
+    refetchOnWindowFocus: true, 
+  });
+
+  // Ensure users is always an array
+  return {
+    users: Array.isArray(usersData) ? usersData : [], // Ensure it's an array
+    isLoading,
+    isError,
+  };
+};
+
+
+
+
+
  
 
 

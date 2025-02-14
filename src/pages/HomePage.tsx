@@ -41,13 +41,13 @@ const HomePage: React.FC = () => {
                     key={user.email}
                     className="border-b hover:bg-primary relative"
                   >
-                    <td className="p-3 text-secondary-foreground">{user.name}</td>
+                    <td className="p-3 text-secondary-foreground capitalize">{user.name}</td>
                     <td className="p-3 text-secondary-foreground">
                       {user.albums ? user.albums.length : 0} Albums
                     </td>
                     <td className="p-3 relative text-center ">
                       <button
-                        onClick={() => navigate(`all-users/user/${user._id}`)}
+                        onClick={() => navigate(`/all-users/user/${user._id}`)}
                         className="text-background underline hover:text-secondary"
                       >
                         <Eye size={15}/>

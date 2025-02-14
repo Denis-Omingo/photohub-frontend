@@ -163,6 +163,43 @@ export const useUpdateAlbum = () => {
     error: mutation.error,
   };
 };
+//GET AN ALBUMs BY AlbumID
+export const useFetchAlbumById = (albumId?: string) => {
+  const fetchAlbumById = async (): Promise<Album> => {
+    if (!albumId || albumId.trim() === "") throw new Error("Album ID is required");
+
+    const token = localStorage.getItem("auth_token");
+    const response = await fetch(`${API_BASE_URL}/api/albums/get-albums/${albumId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch album");
+    }
+
+    return response.json();
+  };
+
+  const { data: album, isLoading, isError, error } = useQuery({
+    queryKey: ["album", albumId],
+    queryFn: fetchAlbumById,
+    enabled: !!albumId && albumId.trim() !== "", // Prevent invalid calls
+    retry: 1,
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
+
+  return { album, isLoading, isError, error };
+};
+
+
 
   //GET ALL IMAGES IN AN ALBUM 
 

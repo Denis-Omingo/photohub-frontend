@@ -162,9 +162,8 @@ export const useUpdateMyUser = () => {
 
 export const useFetchAllUsers = () => {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
 
-  const { allUsers: users, loading: isLoading, error: isError } = useSelector(
+  const { allUsers loading: isLoading, error: isError } = useSelector(
     (state: any) => state.allUsers
   );
 

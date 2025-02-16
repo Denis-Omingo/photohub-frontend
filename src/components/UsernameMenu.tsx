@@ -1,5 +1,5 @@
 import { RootState } from "@/redux/store";
-import { CircleUserRound, LogOut, User, UserPen } from "lucide-react"
+import { Album, CircleUserRound, LogOut, User, UserPen } from "lucide-react"
 import { useSelector } from "react-redux";
 import {  useNavigate } from "react-router-dom";
 import { Separator } from "./ui/separator";
@@ -39,6 +39,19 @@ const UsernameMenu=()=> {
             </Button>
                     </DropdownMenuItem>
                <Separator/>
+             
+
+               <DropdownMenuItem>
+               <Button 
+               variant="ghost"
+               className="flex flex-1 font-bold bg-secondary text-secondary-foreground hover:text-secondary hover:bg-secondary-foreground"
+               onClick={() => navigate("/user/create-album")}
+               >
+               <Album size={16} /> Create Album
+               </Button>
+               </DropdownMenuItem>
+
+             
 
                <Separator/>
 

@@ -1,4 +1,4 @@
-import { LogIn, LogOut, Menu, User, UserPen} from "lucide-react";
+import { Album, LogIn, LogOut, Menu, User, UserPen} from "lucide-react";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Separator } from "./ui/separator";
 import AuthButton from "./GoogleAuthButton";
@@ -42,6 +42,15 @@ const MobileNav=()=>{
                             >
                             <User size={14} /> View Profile
                             </Button>
+
+                            <Button 
+                            variant="ghost" 
+                            className="flex-1 font-bold bg-secondary text-secondary-foreground" 
+                            onClick={() => navigate("/user/create-album")}
+                            >
+                            <Album size={14} /> Create Album
+                            </Button>
+
 
                               <Button 
                               variant="ghost" 

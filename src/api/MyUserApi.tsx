@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery} from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "@/redux/user/userSlice";
 import { toast } from "sonner";
@@ -158,13 +158,12 @@ export const useUpdateMyUser = () => {
     error: mutation.error,
   };
 };
-//Fetch All Users
+
 
 export const useFetchAllUsers = () => {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
 
-  const { allUsers: users, loading: isLoading, error: isError } = useSelector(
+  const { loading: isLoading, error: isError } = useSelector(
     (state: any) => state.allUsers
   );
 
@@ -194,10 +193,10 @@ export const useFetchAllUsers = () => {
         throw new Error("Invalid response format: Expected an array of users.");
       }
 
-      dispatch(fetchUsersSuccess(fetchedUsers)); // Dispatch success action
+      dispatch(fetchUsersSuccess(fetchedUsers)); 
       return fetchedUsers;
     } catch (error: any) {
-      dispatch(fetchUsersFailure(error.message)); // Dispatch failure action
+      dispatch(fetchUsersFailure(error.message)); 
       throw error;
     }
   };
@@ -209,9 +208,9 @@ export const useFetchAllUsers = () => {
     refetchOnWindowFocus: true, 
   });
 
-  // Ensure users is always an array
+ 
   return {
-    users: Array.isArray(usersData) ? usersData : [], // Ensure it's an array
+    users: Array.isArray(usersData) ? usersData : [], 
     isLoading,
     isError,
   };

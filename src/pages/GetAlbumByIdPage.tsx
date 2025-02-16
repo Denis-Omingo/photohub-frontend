@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ImageUploadModal from "@/components/ImageUploadModal";
 import { useFetchAlbumImages } from "@/api/MyAlbumApi";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
@@ -24,7 +24,7 @@ const GetAlbumsByIdPage = () => {
 
       {/* Upload Button */}
       <Button onClick={() => setIsModalOpen(true)} className="mb-6 px-6 py-3">
-        Upload Images
+        <Plus/>New Image
       </Button>
 
       {/* Loader */}

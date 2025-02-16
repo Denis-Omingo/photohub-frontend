@@ -1,8 +1,8 @@
 
 export type ImageUploadResponse = {
-  _id?: string; // Optional if it's not yet saved in the database
+  _id?: string; 
   filename: string;
-  filePath: string; // URL or local path
+  filePath: string; 
   album?: string; 
   createdAt?: string;
   updatedAt?: string;

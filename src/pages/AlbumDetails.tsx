@@ -45,7 +45,7 @@ const AlbumDetails: React.FC = () => {
   const nextImage = () => setSelectedImage((prev) => (prev !== null ? Math.min((images?.length ?? 1) - 1, prev + 1) : 0));
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="p-6 min-h-[80vh]">
       {/* Back Button */}
       <Button onClick={() => window.history.back()} className="mb-4 flex items-center">
         <ArrowLeft className="w-5 h-5 mr-2" /> Go Back

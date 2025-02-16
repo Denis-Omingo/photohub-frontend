@@ -48,7 +48,7 @@ const ImageUploadModal: React.FC<ImageUploadModalProps> = ({ isOpen, onClose, al
     try {
       await uploadPhoto({ albumId, photoFile: selectedFile, token });
 
-      setSelectedFile(null); // Reset file after successful upload
+      setSelectedFile(null); 
       onClose();
     } catch (error) {
       console.error("Upload failed:", error);

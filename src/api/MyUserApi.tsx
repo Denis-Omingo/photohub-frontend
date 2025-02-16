@@ -8,9 +8,12 @@ import {
   fetchUsersSuccess,
   fetchUsersFailure,
 } from "@/redux/users/allUsersSlice";
+// import { useNavigate } from "react-router-dom";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// const navigate=useNavigate()
 //Get current user
 export const useGetMyUser=()=>{
 
@@ -69,7 +72,7 @@ export const useCreateMyUser=() =>{
 
         const data = await response.json();
         console.log("Response: ", data)
-        localStorage.setItem("auth_token", data.token); // Store token securely
+        localStorage.setItem("auth_token", data.token); 
 
         return data.user;
     };
@@ -78,6 +81,7 @@ export const useCreateMyUser=() =>{
         onSuccess: (user) => {
             dispatch(signInSuccess(user));
             toast.success("Signed in successfully!");
+           
         },
         onError: (error) => {
             dispatch(signInFailure(error.message));
@@ -86,7 +90,7 @@ export const useCreateMyUser=() =>{
     });
 
     return {
-        createUser: mutation.mutateAsync, //  Ensure function reference is stable
+        createUser: mutation.mutateAsync, 
         isLoading: mutation.isLoading, 
         isError: mutation.isError, 
         error: mutation.error,

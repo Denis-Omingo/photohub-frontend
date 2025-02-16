@@ -1,18 +1,35 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetchAlbums } from "@/api/MyAlbumApi";
 import UpdateMyAlbumModal from "@/components/UpdateMyAlbumModal";
+import { Loader2 } from "lucide-react";
 
 const UpdateMyAlbumPage = () => {
-  const { albumId } = useParams(); // Get albumId from URL
+  const { albumId } = useParams(); 
   const navigate = useNavigate();
-  const { albums, isLoading } = useFetchAlbums(); // Fetch all albums
+  const { albums, isLoading } = useFetchAlbums(); 
 
-  const album = albums?.find((a) => a._id === albumId); // Find the album by ID
+  const album = albums?.find((a) => a._id === albumId); 
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!album) return <p>Album not found</p>;
+  
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="h-12 w-12 text-primary animate-spin" />
+      </div>
+    );
 
-  return <UpdateMyAlbumModal album={album} onClose={() => navigate(-1)} />;
+  if (!album)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">Album not found</p>
+      </div>
+    );
+
+  return (
+    <div className="h-screen flex justify-center items-center">
+      <UpdateMyAlbumModal album={album} onClose={() => navigate(-1)} />
+    </div>
+  );
 };
 
 export default UpdateMyAlbumPage;

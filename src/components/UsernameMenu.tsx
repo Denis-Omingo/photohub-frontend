@@ -36,10 +36,8 @@ const UsernameMenu=()=> {
                     onClick={() => navigate("/user/view-profile")}
                     >
                     <User size={16} /> View Profile
-            </Button>
-                    </DropdownMenuItem>
-               <Separator/>
-             
+               </Button>
+               </DropdownMenuItem>
 
                <DropdownMenuItem>
                <Button 

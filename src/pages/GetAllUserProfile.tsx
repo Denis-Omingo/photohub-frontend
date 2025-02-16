@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, shallowEqual } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FolderOpen, Pencil, Loader2 } from "lucide-react";
+import { ArrowLeft, FolderOpen, Pencil, Loader2, Plus } from "lucide-react";
 import albumCover from "../assets/album.jpg";
 import { useFetchAlbumById } from "@/api/MyAlbumApi";
 import { RootState } from "@/redux/store";
@@ -21,7 +21,8 @@ const GetAllUserProfile: React.FC = () => {
     shallowEqual
   );
 
-  if (!users || users.length === 0) {
+  // Display loader while fetching users
+  if (!users) {
     return (
       <div className="flex justify-center items-center h-40">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -53,21 +54,25 @@ const GetAllUserProfile: React.FC = () => {
       {/* User Information */}
       <div className="bg-background shadow-lg p-6 rounded-lg text-center">
         <h1 className="text-3xl font-bold text-primary capitalize">Albums by {user.name}</h1>
-        <p className="text-lg text-bold text-secondary">{user.email}</p>
+        <p className="text-lg font-semibold text-secondary">{user.email}</p>
       </div>
 
       {/* Albums Section */}
       <div className="mt-8">
         <h2 className="text-2xl font-semibold text-primary mb-4">Albums</h2>
 
-        {albumIds.length > 0 ? (
+        {albumIds.length === 0 ? (
+          <div className="text-center text-gray-500">
+            <p className="capitalize">{user.name} has no albums yet.</p>
+          </div>
+        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {albumIds.map((albumId) => {
               const { album, isLoading, isError } = useFetchAlbumById(albumId);
 
               if (isLoading) {
                 return (
-                  <Card key={albumId} className="bg-secondary p-6 flex items-center justify-center">
+                  <Card key={albumId} className="flex items-center justify-center p-6 bg-secondary">
                     <Loader2 className="w-8 h-8 animate-spin text-primary" />
                   </Card>
                 );
@@ -75,7 +80,7 @@ const GetAllUserProfile: React.FC = () => {
 
               if (isError || !album) {
                 return (
-                  <Card key={albumId} className="bg-secondary p-4">
+                  <Card key={albumId} className="p-4 bg-secondary">
                     <CardContent>Error loading album</CardContent>
                   </Card>
                 );
@@ -96,12 +101,8 @@ const GetAllUserProfile: React.FC = () => {
                   </div>
 
                   <CardContent className="p-4">
-                    <h3 className="text-xl font-semibold text-primary">
-                      {album.title}
-                    </h3>
-                    <p className="text-secondary-foreground mb-2">
-                      {album.description}
-                    </p>
+                    <h3 className="text-xl font-semibold text-primary">{album.title}</h3>
+                    <p className="text-secondary-foreground mb-2">{album.description}</p>
                     <p className="text-sm text-primary">
                       {album.updatedAt
                         ? `Last Updated: ${new Date(album.updatedAt).toLocaleDateString()}`
@@ -134,8 +135,19 @@ const GetAllUserProfile: React.FC = () => {
               );
             })}
           </div>
-        ) : (
-          <p className="text-secondary-foreground">No albums found.</p>
+        )}
+
+        {/* Create Album Button (Only Visible to Profile Owner) */}
+        {currentUser?._id === user._id && (
+          <div className="mt-6 flex justify-start">
+            <Button
+              variant="default"
+              className="flex items-center"
+              onClick={() => navigate(`/albums/create`)}
+            >
+              <Plus className="w-5 h-5 mr-2" /> Create Album
+            </Button>
+          </div>
         )}
       </div>
     </div>

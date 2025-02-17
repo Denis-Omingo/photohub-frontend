@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { useFetchAlbums } from "@/api/MyAlbumApi";
 import { Pencil, Home, PlusCircle } from "lucide-react";
-import albumCover from "../assets/photohub2.jpg";
+import albumCover from "../assets/album.jpg";
 import { Album } from "@/types";
 import UpdateMyAlbumModal from "@/components/UpdateMyAlbumModal";
 import { Button } from "@/components/ui/button";

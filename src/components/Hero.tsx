@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import photohub1 from "../assets/photohub1.jpg";
-import photohub2 from "../assets/photohub2.jpg";
-import photohub3 from "../assets/photohub3.jpg";
-import photohub4 from "../assets/photohub4.jpg";
+import photohub1 from "../assets/p1.jpg";
+import photohub2 from "../assets/p2.jpg";
+import photohub3 from "../assets/p3.jpg";
+import photohub4 from "../assets/p5.jpg";
 import { Button } from "./ui/button";
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@/redux/store";

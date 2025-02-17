@@ -21,7 +21,6 @@ const Hero = React.memo(() => {
     (state: RootState) => state.user.currentUser,
     shallowEqual
   );
-  console.log(currentUser)
 
   const navigate = useNavigate();
 

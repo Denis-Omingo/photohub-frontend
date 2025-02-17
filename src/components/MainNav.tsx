@@ -9,7 +9,7 @@ const MainNav = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const location = useLocation();
 
-  // Function to check if a link is active
+ 
   const getLinkClasses = (path: string) =>
     location.pathname === path
       ? "text-secondary font-semibold border-b-2 border-secondary"
@@ -17,7 +17,7 @@ const MainNav = () => {
 
   return (
     <nav className="flex justify-between items-center w-full px-6 py-3 bg-primary">
-      <div className="flex gap-6">
+     {currentUser &&  <div className="flex gap-6">
         <Link to="/home" className={getLinkClasses("/home")}>
           Home
         </Link>
@@ -27,7 +27,7 @@ const MainNav = () => {
         <Link to="/my-albums" className={getLinkClasses("/my-albums")}>
           My Albums
         </Link>
-      </div>
+      </div>}
 
       <div>
         {currentUser ? (

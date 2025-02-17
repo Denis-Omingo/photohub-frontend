@@ -7,7 +7,7 @@ import { Eye } from "lucide-react";
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { users, isLoading, isError } = useFetchAllUsers();
-  console.log("USERS DATA:: ", users);
+  // console.log("USERS DATA:: ", users);
 
   return (
     <div className="p-6 mt-2">

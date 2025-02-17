@@ -64,10 +64,10 @@ const HomePage: React.FC = () => {
       {/* View All Albums Section */}
       <Card
         className="cursor-pointer hover:shadow-xl transition bg-primary mt-8"
-        onClick={() => navigate("/albums")}
+        onClick={() => navigate("/user/create-album")}
       >
-        <CardContent className="p-4 text-center">
-          <h3 className="text-xl font-semibold text-primary-foreground">View All Albums</h3>
+        <CardContent className="p-2 text-center">
+          <h3 className="text-xl font-semibold text-primary-foreground">Create Album</h3>
         </CardContent>
       </Card>
     </div>

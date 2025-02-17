@@ -11,12 +11,12 @@ import AuthButton from "./GoogleAuthButton";
 import React from "react";
 
 const Hero = React.memo(() => {
-  // Memoize image list
+
   const images = useMemo(() => [photohub1, photohub2, photohub3, photohub4], []);
 
   const [currentImages, setCurrentImages] = useState<string[]>(images);
 
-  // Optimize Redux state selection
+
   const currentUser = useSelector(
     (state: RootState) => state.user.currentUser,
     shallowEqual
@@ -25,7 +25,7 @@ const Hero = React.memo(() => {
 
   const navigate = useNavigate();
 
-  // Optimized Image Rotation Logic
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImages((prev) => [...prev.slice(1), prev[0]]);
@@ -34,7 +34,7 @@ const Hero = React.memo(() => {
     return () => clearInterval(interval);
   }, []);
 
-  // Memoized event handler for image clicks
+
   const handleImageClick = useCallback((index: number) => {
     setCurrentImages((prev) => {
       const clickedImage = prev[index];
@@ -42,7 +42,7 @@ const Hero = React.memo(() => {
     });
   }, []);
 
-  // Memoized navigation function
+
   const handleViewAlbums = useCallback(() => navigate("/home"), [navigate]);
 
   return (

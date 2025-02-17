@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery} from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from "@/redux/user/userSlice";
 import { toast } from "sonner";
@@ -8,9 +8,12 @@ import {
   fetchUsersSuccess,
   fetchUsersFailure,
 } from "@/redux/users/allUsersSlice";
+// import { useNavigate } from "react-router-dom";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// const navigate=useNavigate()
 //Get current user
 export const useGetMyUser=()=>{
 
@@ -69,7 +72,7 @@ export const useCreateMyUser=() =>{
 
         const data = await response.json();
         console.log("Response: ", data)
-        localStorage.setItem("auth_token", data.token); // Store token securely
+        localStorage.setItem("auth_token", data.token); 
 
         return data.user;
     };
@@ -78,6 +81,7 @@ export const useCreateMyUser=() =>{
         onSuccess: (user) => {
             dispatch(signInSuccess(user));
             toast.success("Signed in successfully!");
+           
         },
         onError: (error) => {
             dispatch(signInFailure(error.message));
@@ -86,7 +90,7 @@ export const useCreateMyUser=() =>{
     });
 
     return {
-        createUser: mutation.mutateAsync, //  Ensure function reference is stable
+        createUser: mutation.mutateAsync, 
         isLoading: mutation.isLoading, 
         isError: mutation.isError, 
         error: mutation.error,
@@ -158,12 +162,12 @@ export const useUpdateMyUser = () => {
     error: mutation.error,
   };
 };
-//Fetch All Users
+
 
 export const useFetchAllUsers = () => {
   const dispatch = useDispatch();
 
-  const { allUsers, loading: isLoading, error: isError } = useSelector(
+  const { loading: isLoading, error: isError } = useSelector(
     (state: any) => state.allUsers
   );
 
@@ -193,10 +197,10 @@ export const useFetchAllUsers = () => {
         throw new Error("Invalid response format: Expected an array of users.");
       }
 
-      dispatch(fetchUsersSuccess(fetchedUsers)); // Dispatch success action
+      dispatch(fetchUsersSuccess(fetchedUsers)); 
       return fetchedUsers;
     } catch (error: any) {
-      dispatch(fetchUsersFailure(error.message)); // Dispatch failure action
+      dispatch(fetchUsersFailure(error.message)); 
       throw error;
     }
   };
@@ -208,9 +212,9 @@ export const useFetchAllUsers = () => {
     refetchOnWindowFocus: true, 
   });
 
-  // Ensure users is always an array
+ 
   return {
-    users: Array.isArray(usersData) ? usersData : [], // Ensure it's an array
+    users: Array.isArray(usersData) ? usersData : [], 
     isLoading,
     isError,
   };

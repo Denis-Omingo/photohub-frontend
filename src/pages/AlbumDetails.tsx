@@ -4,15 +4,16 @@ import { useFetchAlbumById, useFetchAlbumImages } from "@/api/MyAlbumApi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ChevronLeft, ChevronRight, X } from "lucide-react";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 const AlbumDetails: React.FC = () => {
   const { albumId } = useParams<{ albumId: string }>();
   const { album, isLoading: albumLoading, isError: albumError } = useFetchAlbumById(albumId);
-  const { images, isLoading: imagesLoading} = useFetchAlbumImages(albumId);
+  const { images, isLoading: imagesLoading } = useFetchAlbumImages(albumId);
 
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-  // Keyboard navigation for image viewer
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (selectedImage !== null) {
@@ -27,7 +28,11 @@ const AlbumDetails: React.FC = () => {
   }, [selectedImage]);
 
   if (albumLoading || imagesLoading) {
-    return <div className="text-center mt-10 text-primary">Loading album...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-primary"></div>
+      </div>
+    );
   }
 
   if (albumError || !album) {
@@ -40,7 +45,7 @@ const AlbumDetails: React.FC = () => {
   const nextImage = () => setSelectedImage((prev) => (prev !== null ? Math.min((images?.length ?? 1) - 1, prev + 1) : 0));
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="p-6 min-h-[80vh]">
       {/* Back Button */}
       <Button onClick={() => window.history.back()} className="mb-4 flex items-center">
         <ArrowLeft className="w-5 h-5 mr-2" /> Go Back
@@ -48,7 +53,7 @@ const AlbumDetails: React.FC = () => {
 
       {/* Album Information */}
       <h1 className="text-3xl font-bold text-primary capitalize">{album.title}</h1>
-      <p className="text-lg text-secondary-foreground mb-6">{album.description}</p>
+      <h3 className="text-lg text-secondary mb-6">{album.description}</h3>
 
       {/* Images Grid */}
       {images?.length ? (
@@ -56,16 +61,22 @@ const AlbumDetails: React.FC = () => {
           {images.map((image, index) => (
             <Card
               key={index}
-              className="bg-secondary hover:shadow-xl transition cursor-pointer"
+              className="relative bg-secondary hover:shadow-xl transition cursor-pointer overflow-hidden"
               onClick={() => handleImageClick(index)}
             >
-              <CardContent className="p-4 flex flex-col items-center">
+              <CardContent className="p-0 relative">
                 <img
                   src={image.filePath}
                   alt={image.filename}
-                  className="w-full h-48 object-cover rounded-lg"
+                  className="w-full h-48 object-cover transition-all duration-300"
                 />
-                <p className="text-center text-primary mt-2">{image.filename}</p>
+                {/* Overlay Effect on Hover */}
+                <div className="absolute inset-0 bg-black bg-opacity-0 flex flex-col items-center justify-center transition-opacity duration-300 opacity-0 hover:opacity-75">
+                  <p className="text-white text-lg font-semibold">{image.filename}</p>
+                  <Button className="mt-2 bg-primary text-white px-4 py-2 rounded-md">
+                    Click to View
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -74,28 +85,30 @@ const AlbumDetails: React.FC = () => {
         <p className="text-secondary-foreground">No images found.</p>
       )}
 
-      {/* Image Viewer Modal */}
+      {/* Image Viewer Modal with Zoom */}
       {selectedImage !== null && images && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-secondary bg-opacity-80 flex items-center justify-center z-50">
           {/* Close Button */}
-          <button onClick={closeImageViewer} className="absolute top-4 right-4 text-white focus:outline-none">
+          <button onClick={closeImageViewer} className="absolute top-4 right-4 text-background focus:outline-none">
             <X size={32} />
           </button>
 
           {/* Left Navigation */}
           {selectedImage > 0 && (
-            <button onClick={prevImage} className="absolute left-4 text-white focus:outline-none">
+            <button onClick={prevImage} className="absolute left-4 text-background focus:outline-none">
               <ChevronLeft size={48} />
             </button>
           )}
 
           {/* Image & Title */}
-          <div className="max-w-3xl p-4 text-center">
-            <img
-              src={images[selectedImage].filePath}
-              alt={images[selectedImage].filename}
-              className="w-full h-auto rounded-lg"
-            />
+          <div className="max-w-3xl p-1 text-center">
+            <Zoom>
+              <img
+                src={images[selectedImage].filePath}
+                alt={images[selectedImage].filename}
+                className="w-full h-auto rounded-lg cursor-zoom-in"
+              />
+            </Zoom>
             <p className="text-white mt-2">{images[selectedImage].filename}</p>
           </div>
 

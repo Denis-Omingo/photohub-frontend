@@ -86,9 +86,9 @@ export const useCreateAlbum = () => {
         }
 
         const responseData = await response.json();
-        console.log("Fetched Albums:", responseData); // ✅ Debugging
+        console.log("Fetched Albums:", responseData); 
 
-        // ✅ Expecting the response to be a direct array
+        // Expecting the response to be a direct array
         if (Array.isArray(responseData)) {
             return responseData;
         } else {

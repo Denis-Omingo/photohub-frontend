@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { getAuth, GoogleAuthProvider, signInWithPopup, UserCredential } from "firebase/auth";
 import { app } from "@/firebase";
 import { signInStart, signInSuccess, signInFailure } from "@/redux/user/userSlice";
-
 import { User } from "@/types";
 import { useCreateMyUser } from "@/api/MyUserApi";
 
@@ -17,9 +16,9 @@ const AuthButton: React.FC<AuthButtonProps> = ({ children }) => {
     const [isSigningIn, setIsSigningIn] = useState(false);
 
     const handleClick = useCallback(async () => {
-        if (isLoading || isSigningIn) return; // Prevent duplicate sign-in attempts
+        if (isLoading || isSigningIn) return; 
 
-        setIsSigningIn(true); // Lock the button during sign-in
+        setIsSigningIn(true); 
 
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
@@ -36,7 +35,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ children }) => {
 
             const idToken = await firebaseUser.getIdToken();
 
-            // Generate a username from displayName
+            
             const user: User = {
                 email: firebaseUser.email,
                 name: firebaseUser.displayName || "",
@@ -46,20 +45,19 @@ const AuthButton: React.FC<AuthButtonProps> = ({ children }) => {
                 country: "",
             };
 
-            //  Send only the necessary user fields to backend
+        
             await createUser({ 
                 user, 
                 token: idToken 
             });
 
-            dispatch(signInSuccess(user)); //  Dispatch only mapped user object
-
-            console.log("User signed in:", user);
+            dispatch(signInSuccess(user)); 
+     
         } catch (error: any) {
             dispatch(signInFailure(error.message));
             console.error("Google sign-in failed:", error.message);
         } finally {
-            setIsSigningIn(false); // Reset after completion
+            setIsSigningIn(false); 
         }
     }, [createUser, dispatch, isLoading, isSigningIn]);
 

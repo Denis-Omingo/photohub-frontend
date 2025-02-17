@@ -7,8 +7,6 @@ import { Eye } from "lucide-react";
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { users, isLoading, isError } = useFetchAllUsers();
-  console.log("USERS DATA:: ", users);
-
   return (
     <div className="p-6 mt-2">
       {/* Banner Section */}
@@ -32,7 +30,7 @@ const HomePage: React.FC = () => {
                 <tr className="bg-secondary text-left border-b">
                   <th className="p-3 text-primary">Name</th>
                   <th className="p-3 text-primary">Albums</th>
-                  <th className="p-3 text-primary text-center">Actions</th>
+                  <th className="p-3 text-primary text-center">View</th>
                 </tr>
               </thead>
               <tbody>
